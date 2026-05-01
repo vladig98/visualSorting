@@ -233,7 +233,31 @@ public static class Sorter
 
     public static IEnumerable<int> BogoSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        while (!IsSorted(numbers))
+        {
+            int n = numbers.Length;
+            while (n > 1)
+            {
+                n--;
+                int k = Random.Shared.Next(n + 1);
+                (numbers[n], numbers[k]) = (numbers[k], numbers[n]);
+            }
+
+            yield return 0;
+        }
+    }
+
+    private static bool IsSorted(int[] numbers)
+    {
+        for (int i = 0; i < numbers.Length - 1; i++)
+        {
+            if (numbers[i] > numbers[i + 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static IEnumerable<int> StalinSort(int[] numbers)

@@ -16,5 +16,8 @@
 //SortingType type = SortingType.Shell;
 //WindowManager.Initialize(type, 100);
 
-SortingType type = SortingType.CocktailShaker;
-WindowManager.Initialize(type, 100);
+//SortingType type = SortingType.CocktailShaker;
+//WindowManager.Initialize(type, 100);
+
+SortingType type = SortingType.Bogo;
+WindowManager.Initialize(type, 5);
