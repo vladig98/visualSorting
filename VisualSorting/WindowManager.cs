@@ -49,6 +49,7 @@ public static class WindowManager
 
         _activeSort = type switch
         {
+            // --- Standard Comparison Sorts ---
             SortingType.Bubble => Sorter.BubbleSort(_numbers).GetEnumerator(),
             SortingType.Selection => Sorter.SelectionSort(_numbers).GetEnumerator(),
             SortingType.Insertion => Sorter.InsertionSort(_numbers).GetEnumerator(),
@@ -56,15 +57,58 @@ public static class WindowManager
             SortingType.Quick => Sorter.QuickSort(_numbers).GetEnumerator(),
             SortingType.Shell => Sorter.ShellSort(_numbers).GetEnumerator(),
             SortingType.CocktailShaker => Sorter.CocktailShakerSort(_numbers).GetEnumerator(),
+            SortingType.Gnome => Sorter.GnomeSort(_numbers).GetEnumerator(),
+            SortingType.OddEven => Sorter.OddEvenSort(_numbers).GetEnumerator(),
+            SortingType.Comb => Sorter.CombSort(_numbers).GetEnumerator(),
+            SortingType.Cycle => Sorter.CycleSort(_numbers).GetEnumerator(),
+
+            // --- Advanced Comparison (Hybrid/Efficient) ---
+            SortingType.Heap => Sorter.HeapSort(_numbers).GetEnumerator(),
+            SortingType.Intro => Sorter.IntroSort(_numbers).GetEnumerator(),
+            SortingType.InPlaceMerge => Sorter.InPlaceMergeSort(_numbers).GetEnumerator(),
+            SortingType.Tournament => Sorter.TournamentSort(_numbers).GetEnumerator(),
+            SortingType.Tree => Sorter.TreeSort(_numbers).GetEnumerator(),
+            SortingType.Block => Sorter.BlockSort(_numbers).GetEnumerator(),
+            SortingType.Smooth => Sorter.SmoothSort(_numbers).GetEnumerator(),
+            SortingType.Tim => Sorter.TimSort(_numbers).GetEnumerator(),
+            SortingType.Patience => Sorter.PatienceSort(_numbers).GetEnumerator(),
+            SortingType.Cube => Sorter.CubeSort(_numbers).GetEnumerator(),
+            SortingType.Flux => Sorter.FluxSort(_numbers).GetEnumerator(),
+            SortingType.Crum => Sorter.CrumSort(_numbers).GetEnumerator(),
+            SortingType.Library => Sorter.LibrarySort(_numbers).GetEnumerator(),
+            SortingType.Strand => Sorter.StrandSort(_numbers).GetEnumerator(),
+            SortingType.MergeInsertion => Sorter.MergeInsertionSort(_numbers).GetEnumerator(),
+
+            // --- Distribution / Non-Comparison Sorts ---
+            SortingType.Pigeonhole => Sorter.PigeonholeSort(_numbers).GetEnumerator(),
+            SortingType.BucketUniform => Sorter.BucketUniformSort(_numbers).GetEnumerator(),
+            SortingType.BucketInteger => Sorter.BucketIntegerSort(_numbers).GetEnumerator(),
+            SortingType.Counting => Sorter.CountingSort(_numbers).GetEnumerator(),
+            SortingType.LSDRadix => Sorter.LSDRadixSort(_numbers).GetEnumerator(),
+            SortingType.MSDRadix => Sorter.MSDRadixSort(_numbers).GetEnumerator(),
+            SortingType.MSDRadixInPlace => Sorter.MSDRadixInPlaceSort(_numbers).GetEnumerator(),
+            SortingType.Spread => Sorter.SpreadSort(_numbers).GetEnumerator(),
+            SortingType.Burst => Sorter.BurstSort(_numbers).GetEnumerator(),
+            SortingType.Flash => Sorter.FlashSort(_numbers).GetEnumerator(),
+            SortingType.Sample => Sorter.SampleSort(_numbers).GetEnumerator(),
+
+            // --- Concurrent / Hardware Sorts ---
+            SortingType.Bitonic => Sorter.BitonicSort(_numbers).GetEnumerator(),
+            SortingType.SortingNetwork => Sorter.SortingNetworkSort(_numbers).GetEnumerator(),
+            SortingType.Gravity => Sorter.GravitySort(_numbers).GetEnumerator(),
+            SortingType.Spaghetti => Sorter.SpaghettiSort(_numbers).GetEnumerator(),
+
+            // --- The "Esoteric" & Meme Sorts ---
             SortingType.Bogo => Sorter.BogoSort(_numbers).GetEnumerator(),
             SortingType.Stalin => Sorter.StalinSort(_numbers).GetEnumerator(),
             SortingType.Sleep => Sorter.SleepSort(_numbers).GetEnumerator(),
             SortingType.Stooge => Sorter.StoogeSort(_numbers).GetEnumerator(),
+            SortingType.Slow => Sorter.SlowSort(_numbers).GetEnumerator(),
             SortingType.Thanos => Sorter.ThanosSort(_numbers).GetEnumerator(),
             SortingType.Miracle => Sorter.MiracleSort(_numbers).GetEnumerator(),
-            SortingType.Gravity => Sorter.GravitySort(_numbers).GetEnumerator(),
             SortingType.QuantumBogo => Sorter.QuantumBogoSort(_numbers).GetEnumerator(),
-            _ => throw new InvalidOperationException("Invalid sorting type")
+
+            _ => throw new ArgumentOutOfRangeException(nameof(type), $"Sort {type} not handled.")
         };
 
         _window.Run();

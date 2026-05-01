@@ -231,6 +231,176 @@ public static class Sorter
         } while (swapped);
     }
 
+    public static IEnumerable<int> GnomeSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> OddEvenSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> CombSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> CycleSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> HeapSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> IntroSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> InPlaceMergeSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> TournamentSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> TreeSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> BlockSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> SmoothSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> TimSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> PatienceSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> CubeSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> FluxSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> CrumSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> LibrarySort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> StrandSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> MergeInsertionSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> PigeonholeSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> BucketUniformSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> BucketIntegerSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> CountingSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> LSDRadixSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> MSDRadixSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> MSDRadixInPlaceSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> SpreadSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> BurstSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> FlashSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> SampleSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> BitonicSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> SortingNetworkSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> GravitySort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
+    public static IEnumerable<int> SpaghettiSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
     public static IEnumerable<int> BogoSort(int[] numbers)
     {
         while (!IsSorted(numbers))
@@ -245,19 +415,6 @@ public static class Sorter
 
             yield return 0;
         }
-    }
-
-    private static bool IsSorted(int[] numbers)
-    {
-        for (int i = 0; i < numbers.Length - 1; i++)
-        {
-            if (numbers[i] > numbers[i + 1])
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public static IEnumerable<int> StalinSort(int[] numbers)
@@ -275,6 +432,11 @@ public static class Sorter
         throw new NotImplementedException();
     }
 
+    public static IEnumerable<int> SlowSort(int[] numbers)
+    {
+        throw new NotImplementedException();
+    }
+
     public static IEnumerable<int> ThanosSort(int[] numbers)
     {
         throw new NotImplementedException();
@@ -285,13 +447,21 @@ public static class Sorter
         throw new NotImplementedException();
     }
 
-    public static IEnumerable<int> GravitySort(int[] numbers)
+    public static IEnumerable<int> QuantumBogoSort(int[] numbers)
     {
         throw new NotImplementedException();
     }
 
-    public static IEnumerable<int> QuantumBogoSort(int[] numbers)
+    private static bool IsSorted(int[] numbers)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < numbers.Length - 1; i++)
+        {
+            if (numbers[i] > numbers[i + 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
