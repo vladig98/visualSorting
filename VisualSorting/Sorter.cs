@@ -82,7 +82,52 @@ public static class Sorter
 
     public static IEnumerable<int> MergeSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        List<List<int>> subLists = [];
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            subLists.Add([numbers[i]]);
+        }
+
+        while (subLists.Count > 1)
+        {
+            for (int i = 0; i < subLists.Count - 1; i++)
+            {
+                List<int> subListA = subLists[i];
+                List<int> subListB = subLists[i + 1];
+                List<int> merged = [];
+
+                int startOffset = subLists.Take(i).Sum(list => list.Count);
+                int totalToMerge = subListA.Count + subListB.Count;
+
+                int aPtr = 0, bPtr = 0;
+                while (aPtr < subListA.Count || bPtr < subListB.Count)
+                {
+                    int valA = aPtr < subListA.Count ? subListA[aPtr] : int.MaxValue;
+                    int valB = bPtr < subListB.Count ? subListB[bPtr] : int.MaxValue;
+
+                    if (valA <= valB)
+                    {
+                        merged.Add(valA);
+                        aPtr++;
+                    }
+                    else
+                    {
+                        merged.Add(valB);
+                        bPtr++;
+                    }
+
+                    for (int j = 0; j < merged.Count; j++)
+                    {
+                        numbers[startOffset + j] = merged[j];
+                    }
+
+                    yield return startOffset + merged.Count - 1;
+                }
+
+                subLists[i] = merged;
+                subLists.RemoveAt(i + 1);
+            }
+        }
     }
 
     public static IEnumerable<int> QuickSort(int[] numbers)
