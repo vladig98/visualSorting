@@ -132,7 +132,37 @@ public static class Sorter
 
     public static IEnumerable<int> QuickSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        Stack<(int left, int right)> stack = new();
+        stack.Push((0, numbers.Length - 1));
+
+        while (stack.Count > 0)
+        {
+            (int left, int right) = stack.Pop();
+            if (left >= right)
+            {
+                continue;
+            }
+
+            int pivot = numbers[right];
+            int i = left - 1;
+
+            for (int j = left; j < right; j++)
+            {
+                if (numbers[j] < pivot)
+                {
+                    i++;
+                    (numbers[i], numbers[j]) = (numbers[j], numbers[i]);
+                    yield return i;
+                }
+            }
+
+            (numbers[i + 1], numbers[right]) = (numbers[right], numbers[i + 1]);
+            int pivotIndex = i + 1;
+            yield return pivotIndex;
+
+            stack.Push((pivotIndex + 1, right));
+            stack.Push((left, pivotIndex - 1));
+        }
     }
 
     public static IEnumerable<int> ShellSort(int[] numbers)
