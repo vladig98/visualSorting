@@ -7,10 +7,10 @@ public enum SortingType
     Selection = 1,
     Insertion = 2,
     Merge = 3,
-    Quick = 4,
+    Quick = 4,             // aka Partition-Exchange
     Shell = 5,
-    CocktailShaker = 6,
-    Gnome = 7,
+    CocktailShaker = 6,    // aka Bidirectional Bubble sort / Cocktail sort / Shaker sort / Ripple sort / Shuffle sort / Shuttle sort 
+    Gnome = 7,             // aka Stupid
     OddEven = 8,
     Comb = 9,
     Cycle = 10,

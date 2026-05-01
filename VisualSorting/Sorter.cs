@@ -233,7 +233,21 @@ public static class Sorter
 
     public static IEnumerable<int> GnomeSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int index = 1;
+        while (index < numbers.Length)
+        {
+            if (index == 0 || numbers[index] >= numbers[index - 1])
+            {
+                index++;
+            }
+            else
+            {
+                (numbers[index], numbers[index - 1]) = (numbers[index - 1], numbers[index]);
+                index--;
+
+                yield return index;
+            }
+        }
     }
 
     public static IEnumerable<int> OddEvenSort(int[] numbers)
