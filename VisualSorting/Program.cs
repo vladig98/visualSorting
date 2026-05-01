@@ -22,8 +22,11 @@
 //SortingType type = SortingType.Gnome;
 //WindowManager.Initialize(type, 100);
 
-SortingType type = SortingType.OddEven;
-WindowManager.Initialize(type, 100);
+//SortingType type = SortingType.OddEven;
+//WindowManager.Initialize(type, 100);
+
+SortingType type = SortingType.Comb;
+WindowManager.Initialize(type, 1000);
 
 //SortingType type = SortingType.Bogo;
 //WindowManager.Initialize(type, 5);

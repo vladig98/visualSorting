@@ -281,7 +281,37 @@ public static class Sorter
 
     public static IEnumerable<int> CombSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int gap = numbers.Length;
+        double shrink = 1.3;
+        bool isSorted = false;
+
+        while (!isSorted)
+        {
+            gap = (int)Math.Floor(gap / shrink);
+            if (gap <= 1)
+            {
+                gap = 1;
+                isSorted = true;
+            }
+            else if (gap == 9 || gap == 10)
+            {
+                gap = 11;
+            }
+
+            int i = 0;
+            while (i + gap < numbers.Length)
+            {
+                if (numbers[i] > numbers[i + gap])
+                {
+                    (numbers[i], numbers[i + gap]) = (numbers[i + gap], numbers[i]);
+                    isSorted = false;
+
+                    yield return gap;
+                }
+
+                i++;
+            }
+        }
     }
 
     public static IEnumerable<int> CycleSort(int[] numbers)
