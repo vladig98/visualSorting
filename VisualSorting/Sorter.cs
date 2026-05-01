@@ -198,7 +198,37 @@ public static class Sorter
 
     public static IEnumerable<int> CocktailShakerSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        bool swapped;
+
+        do
+        {
+            swapped = false;
+            for (int i = 0; i < numbers.Length - 1; i++)
+            {
+                if (numbers[i] > numbers[i + 1])
+                {
+                    (numbers[i], numbers[i + 1]) = (numbers[i + 1], numbers[i]);
+                    swapped = true;
+                    yield return i;
+                }
+            }
+
+            if (!swapped)
+            {
+                break;
+            }
+
+            swapped = false;
+            for (int i = numbers.Length - 2; i >= 0; i--)
+            {
+                if (numbers[i] > numbers[i + 1])
+                {
+                    (numbers[i], numbers[i + 1]) = (numbers[i + 1], numbers[i]);
+                    swapped = true;
+                    yield return i;
+                }
+            }
+        } while (swapped);
     }
 
     public static IEnumerable<int> BogoSort(int[] numbers)
