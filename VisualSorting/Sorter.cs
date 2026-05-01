@@ -27,7 +27,27 @@ public static class Sorter
 
     public static IEnumerable<int> SelectionSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int index = 0;
+
+        while (index < numbers.Length - 1)
+        {
+            int currentIndex = -1;
+
+            for (int i = index; i < numbers.Length; i++)
+            {
+                if (currentIndex >= 0 && numbers[i] >= numbers[currentIndex])
+                {
+                    continue;
+                }
+
+                currentIndex = i;
+            }
+
+            (numbers[index], numbers[currentIndex]) = (numbers[currentIndex], numbers[index]);
+            index++;
+
+            yield return numbers[currentIndex];
+        }
     }
 
     public static IEnumerable<int> InsertionSort(int[] numbers)

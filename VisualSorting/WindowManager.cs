@@ -12,7 +12,7 @@ public static class WindowManager
     private static uint _program;
 
     // State
-    private static readonly int[] _numbers = new int[100];
+    private static int[] _numbers = [];
     private const int BaseWidth = 1800;
     private const int BaseHeight = 600;
 
@@ -26,7 +26,7 @@ public static class WindowManager
         out vec4 out_color;
         void main() { out_color = vec4(1.0, 0.5, 0.2, 1.0); }";
 
-    public static void Initialize(SortingType type)
+    public static void Initialize(SortingType type, int numbersLength = 100)
     {
         WindowOptions options = WindowOptions.Default with
         {
@@ -41,7 +41,8 @@ public static class WindowManager
         _window.Render += OnRender;
         _window.FramebufferResize += (size) => _gl?.Viewport(0, 0, (uint)size.X, (uint)size.Y);
 
-        for (int i = 0; i < _numbers.Length; i++)
+        _numbers = new int[numbersLength];
+        for (int i = 0; i < numbersLength; i++)
         {
             _numbers[i] = Random.Shared.Next(10, BaseHeight);
         }
