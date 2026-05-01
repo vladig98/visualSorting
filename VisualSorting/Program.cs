@@ -25,7 +25,10 @@
 //SortingType type = SortingType.OddEven;
 //WindowManager.Initialize(type, 100);
 
-SortingType type = SortingType.Comb;
+//SortingType type = SortingType.Comb;
+//WindowManager.Initialize(type, 1000);
+
+SortingType type = SortingType.Cycle;
 WindowManager.Initialize(type, 1000);
 
 //SortingType type = SortingType.Bogo;

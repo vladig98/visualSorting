@@ -316,7 +316,53 @@ public static class Sorter
 
     public static IEnumerable<int> CycleSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        for (int cycleStart = 0; cycleStart <= numbers.Length - 2; cycleStart++)
+        {
+            int item = numbers[cycleStart];
+            int pos = cycleStart;
+
+            for (int i = cycleStart + 1; i < numbers.Length; i++)
+            {
+                if (numbers[i] < item)
+                {
+                    pos++;
+                }
+            }
+
+            if (pos == cycleStart)
+            {
+                continue;
+            }
+
+            while (item == numbers[pos])
+            {
+                pos++;
+            }
+
+            (numbers[pos], item) = (item, numbers[pos]);
+            yield return pos;
+
+            while (pos != cycleStart)
+            {
+                pos = cycleStart;
+
+                for (int i = cycleStart + 1; i < numbers.Length; i++)
+                {
+                    if (numbers[i] < item)
+                    {
+                        pos++;
+                    }
+                }
+
+                while (item == numbers[pos])
+                {
+                    pos++;
+                }
+
+                (numbers[pos], item) = (item, numbers[pos]);
+                yield return pos;
+            }
+        }
     }
 
     public static IEnumerable<int> HeapSort(int[] numbers)
