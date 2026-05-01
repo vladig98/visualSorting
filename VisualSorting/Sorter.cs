@@ -252,7 +252,31 @@ public static class Sorter
 
     public static IEnumerable<int> OddEvenSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        bool isSorted = false;
+        while (!isSorted)
+        {
+            isSorted = true;
+            for (int i = 1; i < numbers.Length - 1; i += 2)
+            {
+                if (numbers[i] > numbers[i + 1])
+                {
+                    (numbers[i], numbers[i + 1]) = (numbers[i + 1], numbers[i]);
+                    isSorted = false;
+
+                    yield return i;
+                }
+            }
+            for (int i = 0; i < numbers.Length - 1; i += 2)
+            {
+                if (numbers[i] > numbers[i + 1])
+                {
+                    (numbers[i], numbers[i + 1]) = (numbers[i + 1], numbers[i]);
+                    isSorted = false;
+
+                    yield return i;
+                }
+            }
+        }
     }
 
     public static IEnumerable<int> CombSort(int[] numbers)

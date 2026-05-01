@@ -19,7 +19,10 @@
 //SortingType type = SortingType.CocktailShaker;
 //WindowManager.Initialize(type, 100);
 
-SortingType type = SortingType.Gnome;
+//SortingType type = SortingType.Gnome;
+//WindowManager.Initialize(type, 100);
+
+SortingType type = SortingType.OddEven;
 WindowManager.Initialize(type, 100);
 
 //SortingType type = SortingType.Bogo;

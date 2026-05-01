@@ -11,7 +11,7 @@ public enum SortingType
     Shell = 5,
     CocktailShaker = 6,    // aka Bidirectional Bubble sort / Cocktail sort / Shaker sort / Ripple sort / Shuffle sort / Shuttle sort 
     Gnome = 7,             // aka Stupid
-    OddEven = 8,
+    OddEven = 8,           // aka Brick sort / Parity sort / Odd-Even Transposition   
     Comb = 9,
     Cycle = 10,
 
