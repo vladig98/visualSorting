@@ -1,1 +1,2 @@
-﻿WindowManager.Initialize();
+﻿SortingType type = SortingType.Bubble;
+WindowManager.Initialize(type);

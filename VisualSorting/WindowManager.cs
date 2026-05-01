@@ -16,6 +16,8 @@ public static class WindowManager
     private const int BaseWidth = 1800;
     private const int BaseHeight = 600;
 
+    private static IEnumerator<int>? _activeSort;
+
     private const string VertexShaderSource = @"#version 330 core
         layout (location = 0) in vec3 aPosition;
         void main() { gl_Position = vec4(aPosition, 1.0); }";
@@ -24,7 +26,7 @@ public static class WindowManager
         out vec4 out_color;
         void main() { out_color = vec4(1.0, 0.5, 0.2, 1.0); }";
 
-    public static void Initialize()
+    public static void Initialize(SortingType type)
     {
         WindowOptions options = WindowOptions.Default with
         {
@@ -43,6 +45,26 @@ public static class WindowManager
         {
             _numbers[i] = Random.Shared.Next(10, BaseHeight);
         }
+
+        _activeSort = type switch
+        {
+            SortingType.Bubble => Sorter.BubbleSort(_numbers).GetEnumerator(),
+            SortingType.Selection => Sorter.SelectionSort(_numbers).GetEnumerator(),
+            SortingType.Insertion => Sorter.InsertionSort(_numbers).GetEnumerator(),
+            SortingType.Merge => Sorter.MergeSort(_numbers).GetEnumerator(),
+            SortingType.Quick => Sorter.QuickSort(_numbers).GetEnumerator(),
+            SortingType.Shell => Sorter.ShellSort(_numbers).GetEnumerator(),
+            SortingType.CocktailShaker => Sorter.CocktailShakerSort(_numbers).GetEnumerator(),
+            SortingType.Bogo => Sorter.BogoSort(_numbers).GetEnumerator(),
+            SortingType.Stalin => Sorter.StalinSort(_numbers).GetEnumerator(),
+            SortingType.Sleep => Sorter.SleepSort(_numbers).GetEnumerator(),
+            SortingType.Stooge => Sorter.StoogeSort(_numbers).GetEnumerator(),
+            SortingType.Thanos => Sorter.ThanosSort(_numbers).GetEnumerator(),
+            SortingType.Miracle => Sorter.MiracleSort(_numbers).GetEnumerator(),
+            SortingType.Gravity => Sorter.GravitySort(_numbers).GetEnumerator(),
+            SortingType.QuantumBogo => Sorter.QuantumBogoSort(_numbers).GetEnumerator(),
+            _ => throw new InvalidOperationException("Invalid sorting type")
+        };
 
         _window.Run();
     }
@@ -184,6 +206,11 @@ public static class WindowManager
     }
 
     private static void OnUpdate(double deltaTime) 
-    { 
+    {
+        if (_activeSort?.MoveNext() == false)
+        {
+            // Sort is finished!
+            _activeSort = null;
+        }
     }
 }
