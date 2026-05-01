@@ -167,7 +167,33 @@ public static class Sorter
 
     public static IEnumerable<int> ShellSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        int[] gaps = [701, 301, 132, 57, 23, 10, 4, 1];
+
+        foreach (int gap in gaps)
+        {
+            if (gap >= n)
+            {
+                continue;
+            }
+
+            for (int i = gap; i < n; i++)
+            {
+                int temp = numbers[i];
+                int j = i;
+
+                while (j >= gap && numbers[j - gap] > temp)
+                {
+                    numbers[j] = numbers[j - gap];
+                    j -= gap;
+
+                    yield return j;
+                }
+
+                numbers[j] = temp;
+                yield return j;
+            }
+        }
     }
 
     public static IEnumerable<int> CocktailShakerSort(int[] numbers)
