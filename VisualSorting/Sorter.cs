@@ -367,7 +367,45 @@ public static class Sorter
 
     public static IEnumerable<int> HeapSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int count = numbers.Length;
+        int start = count / 2;
+        int end = count;
+
+        while (end > 1)
+        {
+            if (start > 0)
+            {
+                start--;
+            }
+            else
+            {
+                end--;
+                (numbers[end], numbers[0]) = (numbers[0], numbers[end]);
+                yield return end;
+            }
+
+            int root = start;
+            while ((root * 2 + 1) < end)
+            {
+                int child = root * 2 + 1;
+
+                if (child + 1 < end && numbers[child] < numbers[child + 1])
+                {
+                    child++;
+                }
+
+                if (numbers[root] < numbers[child])
+                {
+                    (numbers[root], numbers[child]) = (numbers[child], numbers[root]);
+                    root = child;
+                    yield return root;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
     }
 
     public static IEnumerable<int> IntroSort(int[] numbers)
