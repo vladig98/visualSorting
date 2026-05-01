@@ -52,7 +52,32 @@ public static class Sorter
 
     public static IEnumerable<int> InsertionSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            int index = -1;
+            int current = numbers[i];
+
+            for (int j = i - 1; j >= 0; j--)
+            {
+                if (current >= numbers[j])
+                {
+                    break;
+                }
+
+                index = j;
+                numbers[j + 1] = numbers[j];
+
+                yield return numbers[j];
+            }
+
+            if (index == i || index < 0)
+            {
+                continue;
+            }
+
+            numbers[index] = current;
+            yield return numbers[index];
+        }
     }
 
     public static IEnumerable<int> MergeSort(int[] numbers)
