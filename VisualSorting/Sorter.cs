@@ -417,7 +417,7 @@ public static class Sorter
 
     public static IEnumerable<int> InPlaceMergeSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        return InPlaceMergeSortInternal(numbers, 0, numbers.Length - 1);
     }
 
     public static IEnumerable<int> TournamentSort(int[] numbers)
@@ -735,5 +735,64 @@ public static class Sorter
 
         (numbers[i + 1], numbers[right]) = (numbers[right], numbers[i + 1]);
         return i + 1;
+    }
+
+    private static IEnumerable<int> InPlaceMergeSortInternal(int[] numbers, int left, int right)
+    {
+        if (left < right)
+        {
+            int mid = left + (right - left) / 2;
+
+            foreach (int res in InPlaceMergeSortInternal(numbers, left, mid))
+            {
+                yield return res;
+            }
+
+            foreach (int res in InPlaceMergeSortInternal(numbers, mid + 1, right))
+            {
+                yield return res;
+            }
+
+            foreach (int res in InPlaceMerge(numbers, left, mid, right))
+            {
+                yield return res;
+            }
+        }
+    }
+
+    private static IEnumerable<int> InPlaceMerge(int[] numbers, int start, int mid, int end)
+    {
+        int start2 = mid + 1;
+        if (numbers[mid] <= numbers[start2])
+        {
+            yield break;
+        }
+
+        while (start <= mid && start2 <= end)
+        {
+            if (numbers[start] <= numbers[start2])
+            {
+                start++;
+            }
+            else
+            {
+                int value = numbers[start2];
+                int index = start2;
+
+                while (index != start)
+                {
+                    numbers[index] = numbers[index - 1];
+                    index--;
+                    yield return index;
+                }
+
+                numbers[start] = value;
+                yield return start;
+
+                start++;
+                mid++;
+                start2++;
+            }
+        }
     }
 }
