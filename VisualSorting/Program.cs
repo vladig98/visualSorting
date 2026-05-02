@@ -49,8 +49,11 @@
 //SortingType type = SortingType.Block;
 //WindowManager.Initialize(type, 100);
 
-SortingType type = SortingType.Smooth;
-WindowManager.Initialize(type, 31);
+//SortingType type = SortingType.Smooth;
+//WindowManager.Initialize(type, 31);
+
+SortingType type = SortingType.Tim;
+WindowManager.Initialize(type, 100);
 
 //SortingType type = SortingType.Bogo;
 //WindowManager.Initialize(type, 5);

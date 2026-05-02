@@ -595,7 +595,34 @@ public static class Sorter
 
     public static IEnumerable<int> TimSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        int minRun = GetMinRun(n);
+
+        for (int i = 0; i < n; i += minRun)
+        {
+            int end = Math.Min(i + minRun - 1, n - 1);
+            foreach (int frame in InsertionSortRange(numbers, i, end))
+            {
+                yield return frame;
+            }
+        }
+
+        for (int size = minRun; size < n; size = 2 * size)
+        {
+            for (int left = 0; left < n; left += 2 * size)
+            {
+                int mid = left + size - 1;
+                int right = Math.Min(left + 2 * size - 1, n - 1);
+
+                if (mid < right)
+                {
+                    foreach (int frame in InPlaceMerge(numbers, left, mid, right))
+                    {
+                        yield return frame;
+                    }
+                }
+            }
+        }
     }
 
     public static IEnumerable<int> PatienceSort(int[] numbers)
@@ -1124,5 +1151,16 @@ public static class Sorter
         int t = c; 
         c = b - c - 1; 
         b = t; 
+    }
+
+    private static int GetMinRun(int n)
+    {
+        int r = 0;
+        while (n >= 32)
+        {
+            r |= (n & 1);
+            n >>= 1;
+        }
+        return n + r;
     }
 }
