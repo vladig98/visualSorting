@@ -743,7 +743,17 @@ public static class Sorter
 
     public static IEnumerable<int> CrumSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        if (n < 2)
+        {
+            yield break;
+        }
+
+        int blockSize = (int)Math.Sqrt(n);
+        foreach (int frame in CrumSortRecursive(numbers, 0, n, blockSize))
+        {
+            yield return frame;
+        }
     }
 
     public static IEnumerable<int> LibrarySort(int[] numbers)
@@ -1333,6 +1343,59 @@ public static class Sorter
                 yield return j;
             }
             array[j + 1] = key;
+        }
+    }
+
+    private static IEnumerable<int> CrumSortRecursive(int[] array, int start, int count, int blockSize)
+    {
+        if (count <= 32)
+        {
+            foreach (int frame in InsertionSort(array, start, start + count - 1))
+            {
+                yield return frame;
+            }
+
+            yield break;
+        }
+
+        int pivot = array[start + count / 2];
+        int i = start;
+        int j = start + count - 1;
+
+        while (i <= j)
+        {
+            while (array[i] < pivot)
+            {
+                i++;
+            }
+
+            while (array[j] > pivot)
+            {
+                j--;
+            }
+
+            if (i <= j)
+            {
+                (array[i], array[j]) = (array[j], array[i]);
+                i++;
+                j--;
+                yield return i;
+            }
+        }
+
+        if (start < j)
+        {
+            foreach (int frame in CrumSortRecursive(array, start, j - start + 1, blockSize))
+            {
+                yield return frame;
+            }
+        }
+        if (i < start + count)
+        {
+            foreach (int frame in CrumSortRecursive(array, i, start + count - i, blockSize))
+            {
+                yield return frame;
+            }
         }
     }
 }

@@ -61,7 +61,10 @@
 //SortingType type = SortingType.Cube;
 //WindowManager.Initialize(type, 100);
 
-SortingType type = SortingType.Flux;
+//SortingType type = SortingType.Flux;
+//WindowManager.Initialize(type, 100);
+
+SortingType type = SortingType.Crum;
 WindowManager.Initialize(type, 100);
 
 //SortingType type = SortingType.Bogo;
