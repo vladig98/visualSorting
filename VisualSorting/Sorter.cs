@@ -446,7 +446,25 @@ public static class Sorter
 
     public static IEnumerable<int> TreeSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        if (numbers.Length == 0)
+        {
+            yield break;
+        }
+
+        TreeNode root = new(numbers[0]);
+        for (int i = 1; i < numbers.Length; i++)
+        {
+            Insert(root, numbers[i]);
+            yield return i;
+        }
+
+        int index = 0;
+        foreach (int val in TraverseInOrder(root))
+        {
+            numbers[index] = val;
+            yield return index;
+            index++;
+        }
     }
 
     public static IEnumerable<int> BlockSort(int[] numbers)
@@ -853,5 +871,51 @@ public static class Sorter
         }
 
         return currentRound[0];
+    }
+
+    private static void Insert(TreeNode root, int value)
+    {
+        TreeNode current = root;
+        while (true)
+        {
+            if (value <= current.Value)
+            {
+                if (current.Left == null)
+                {
+                    current.Left = new TreeNode(value);
+                    break;
+                }
+                current = current.Left;
+            }
+            else
+            {
+                if (current.Right == null)
+                {
+                    current.Right = new TreeNode(value);
+                    break;
+                }
+                current = current.Right;
+            }
+        }
+    }
+
+    private static IEnumerable<int> TraverseInOrder(TreeNode? node)
+    {
+        if (node == null)
+        {
+            yield break;
+        }
+
+        foreach (int val in TraverseInOrder(node.Left))
+        {
+            yield return val;
+        }
+
+        yield return node.Value;
+
+        foreach (int val in TraverseInOrder(node.Right))
+        {
+            yield return val;
+        }
     }
 }
