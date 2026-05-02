@@ -31,8 +31,14 @@
 //SortingType type = SortingType.Cycle;
 //WindowManager.Initialize(type, 1000);
 
-SortingType type = SortingType.Heap;
-WindowManager.Initialize(type, 100);
+//SortingType type = SortingType.Heap;
+//WindowManager.Initialize(type, 100);
+
+//SortingType type = SortingType.Intro;
+//WindowManager.Initialize(type, 1000);
+
+SortingType type = SortingType.InPlaceMerge;
+WindowManager.Initialize(type, 1000);
 
 //SortingType type = SortingType.Bogo;
 //WindowManager.Initialize(type, 5);

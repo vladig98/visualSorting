@@ -410,7 +410,9 @@ public static class Sorter
 
     public static IEnumerable<int> IntroSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int maxDepth = (int)Math.Floor(Math.Log2(numbers.Length)) * 2;
+
+        return IntroSortInternal(numbers, 0, numbers.Length - 1, maxDepth);
     }
 
     public static IEnumerable<int> InPlaceMergeSort(int[] numbers)
@@ -615,5 +617,123 @@ public static class Sorter
         }
 
         return true;
+    }
+
+    private static IEnumerable<int> IntroSortInternal(int[] numbers, int left, int right, int depth)
+    {
+        int n = right - left + 1;
+
+        if (n < 16)
+        {
+            foreach (var frame in InsertionSortRange(numbers, left, right))
+            {
+                yield return frame;
+            }
+        }
+        else if (depth == 0)
+        {
+            foreach (var frame in HeapSortRange(numbers, left, right))
+            {
+                yield return frame;
+            }
+        }
+        else
+        {
+            int pivotIndex = Partition(numbers, left, right);
+            yield return pivotIndex;
+
+            foreach (int frame in IntroSortInternal(numbers, left, pivotIndex - 1, depth - 1))
+            {
+                yield return frame;
+            }
+
+            foreach (int frame in IntroSortInternal(numbers, pivotIndex + 1, right, depth - 1))
+            {
+                yield return frame;
+            }
+        }
+    }
+
+    private static IEnumerable<int> InsertionSortRange(int[] numbers, int left, int right)
+    {
+        for (int i = left + 1; i <= right; i++)
+        {
+            int temp = numbers[i];
+            int j = i;
+
+            while (j > left && numbers[j - 1] > temp)
+            {
+                numbers[j] = numbers[j - 1];
+                j--;
+                yield return j;
+            }
+            numbers[j] = temp;
+            yield return j;
+        }
+    }
+
+    private static IEnumerable<int> HeapSortRange(int[] numbers, int left, int right)
+    {
+        int n = right - left + 1;
+
+        for (int i = n / 2 - 1; i >= 0; i--)
+        {
+            foreach (int res in SiftDownRange(numbers, i, n, left))
+            {
+                yield return res;
+            }
+        }
+
+        for (int i = n - 1; i > 0; i--)
+        {
+            (numbers[left], numbers[left + i]) = (numbers[left + i], numbers[left]);
+            yield return left + i;
+
+            foreach (int res in SiftDownRange(numbers, 0, i, left))
+            {
+                yield return res;
+            }
+        }
+    }
+
+    private static IEnumerable<int> SiftDownRange(int[] numbers, int root, int n, int offset)
+    {
+        while (root * 2 + 1 < n)
+        {
+            int child = root * 2 + 1;
+            if (child + 1 < n && numbers[offset + child] < numbers[offset + child + 1])
+            {
+                child++;
+            }
+
+            if (numbers[offset + root] < numbers[offset + child])
+            {
+                (numbers[offset + root], numbers[offset + child]) = (numbers[offset + child], numbers[offset + root]);
+                root = child;
+                yield return offset + root;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    private static int Partition(int[] numbers, int left, int right)
+    {
+        int pivot = numbers[right];
+        int i = left - 1;
+
+        for (int j = left; j < right; j++)
+        {
+            if (numbers[j] <= pivot)
+            {
+                i++;
+                (numbers[i], numbers[j]) = (numbers[j], numbers[i]);
+            }
+        }
+
+        (numbers[i + 1], numbers[right]) = (numbers[right], numbers[i + 1]);
+        return i + 1;
     }
 }

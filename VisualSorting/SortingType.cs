@@ -17,7 +17,7 @@ public enum SortingType
 
     // --- Advanced Comparison (Hybrid/Efficient) ---
     Heap = 11,
-    Intro = 12,
+    Intro = 12,            // aka Introspective Sort
     InPlaceMerge = 13,
     Tournament = 14,
     Tree = 15,
