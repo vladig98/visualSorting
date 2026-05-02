@@ -508,7 +508,89 @@ public static class Sorter
 
     public static IEnumerable<int> SmoothSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        if (n < 2)
+        {
+            yield break;
+        }
+
+        int p = 1, b = 1, c = 1;
+
+        // 1. BUILD PHASE
+        for (int i = 0; i < n; i++)
+        {
+            if ((p & 3) == 3)
+            {
+                p >>= 2;
+                Up(ref b, ref c);
+                Up(ref b, ref c);
+                p++;
+            }
+            else if (b > 1 && i + c + 1 >= n)
+            {
+                p <<= (b - 1);
+            }
+            else
+            {
+                if (b == 1)
+                {
+                    p <<= 1;
+                }
+                else
+                {
+                    p <<= b - 1;
+                }
+
+                Down(ref b, ref c);
+                p |= 1;
+            }
+            foreach (int f in Trinkle(numbers, i, p, b, c))
+            {
+                yield return f;
+            }
+        }
+
+        // 2. EXTRACTION PHASE
+        for (int i = n - 1; i > 0; i--)
+        {
+            if (b == 1)
+            {
+                p--;
+                while (p > 0 && (p & 1) == 0)
+                {
+                    p >>= 1;
+                    Up(ref b, ref c);
+                }
+            }
+            else if (b >= 3)
+            {
+                p--;
+                int leftChildIdx = i - b + c;
+                int rightChildIdx = i - 1;
+
+                p <<= 1;
+                p |= 1;
+                int bLeft = b, cLeft = c;
+                Down(ref bLeft, ref cLeft);
+
+                foreach (int f in Trinkle(numbers, leftChildIdx, p, bLeft, cLeft))
+                {
+                    yield return f;
+                }
+
+                p <<= 1;
+                p |= 1;
+                Down(ref b, ref c);
+                Down(ref b, ref c);
+
+                foreach (int f in Trinkle(numbers, rightChildIdx, p, b, c))
+                {
+                    yield return f;
+                }
+            }
+
+            yield return i;
+        }
     }
 
     public static IEnumerable<int> TimSort(int[] numbers)
@@ -951,5 +1033,96 @@ public static class Sorter
         {
             yield return val;
         }
+    }
+
+    private static IEnumerable<int> Trinkle(int[] numbers, int r, int p, int b, int c)
+    {
+        while (p > 0)
+        {
+            while ((p & 1) == 0)
+            {
+                p >>= 1;
+                Up(ref b, ref c);
+            }
+
+            if (p == 1)
+            {
+                break;
+            }
+
+            int prevRoot = r - b;
+            if (prevRoot < 0 || numbers[prevRoot] <= numbers[r])
+            {
+                break;
+            }
+
+            if (b >= 3)
+            {
+                int rLeft = r - b + c;
+                int rRight = r - 1;
+                if (numbers[prevRoot] <= numbers[rLeft] || numbers[prevRoot] <= numbers[rRight])
+                {
+                    break;
+                }
+            }
+
+            (numbers[r], numbers[prevRoot]) = (numbers[prevRoot], numbers[r]);
+            r = prevRoot;
+            p--;
+            yield return r;
+        }
+
+        foreach (int f in Sift(numbers, r, b, c))
+        {
+            yield return f;
+        }
+    }
+
+    private static IEnumerable<int> Sift(int[] numbers, int r, int b, int c)
+    {
+        while (b >= 3)
+        {
+            int r2 = r - b + c;
+            int r3 = r - 1;    
+
+            if (r2 < 0 || r3 < 0)
+            {
+                break;
+            }
+
+            if (numbers[r2] < numbers[r3])
+            {
+                r2 = r3;
+                Down(ref b, ref c);
+            }
+            else
+            {
+                Down(ref b, ref c);
+                Down(ref b, ref c);
+            }
+
+            if (numbers[r] >= numbers[r2])
+            {
+                break;
+            }
+
+            (numbers[r], numbers[r2]) = (numbers[r2], numbers[r]);
+            r = r2;
+            yield return r;
+        }
+    }
+
+    private static void Up(ref int b, ref int c) 
+    { 
+        int t = b; 
+        b = b + c + 1; 
+        c = t; 
+    }
+
+    private static void Down(ref int b, ref int c) 
+    { 
+        int t = c; 
+        c = b - c - 1; 
+        b = t; 
     }
 }
