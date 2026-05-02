@@ -627,7 +627,61 @@ public static class Sorter
 
     public static IEnumerable<int> PatienceSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        if (n == 0)
+        {
+            yield break;
+        }
+
+        List<List<int>> piles = [];
+        for (int i = 0; i < n; i++)
+        {
+            bool placed = false;
+            for (int j = 0; j < piles.Count; j++)
+            {
+                if (numbers[i] < piles[j][^1])
+                {
+                    piles[j].Add(numbers[i]);
+                    placed = true;
+                    yield return i;
+                    break;
+                }
+            }
+
+            if (!placed)
+            {
+                piles.Add([numbers[i]]);
+                yield return i;
+            }
+        }
+
+        int resultIndex = 0;
+        while (piles.Count > 0)
+        {
+            int minValue = int.MaxValue;
+            int minPileIndex = -1;
+
+            for (int i = 0; i < piles.Count; i++)
+            {
+                int topValue = piles[i][^1];
+                if (topValue < minValue)
+                {
+                    minValue = topValue;
+                    minPileIndex = i;
+                }
+            }
+
+            numbers[resultIndex] = minValue;
+            piles[minPileIndex].RemoveAt(piles[minPileIndex].Count - 1);
+
+            if (piles[minPileIndex].Count == 0)
+            {
+                piles.RemoveAt(minPileIndex);
+            }
+
+            yield return resultIndex;
+            resultIndex++;
+        }
     }
 
     public static IEnumerable<int> CubeSort(int[] numbers)

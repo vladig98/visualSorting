@@ -52,7 +52,10 @@
 //SortingType type = SortingType.Smooth;
 //WindowManager.Initialize(type, 31);
 
-SortingType type = SortingType.Tim;
+//SortingType type = SortingType.Tim;
+//WindowManager.Initialize(type, 100);
+
+SortingType type = SortingType.Patience;
 WindowManager.Initialize(type, 100);
 
 //SortingType type = SortingType.Bogo;
