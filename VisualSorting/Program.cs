@@ -43,7 +43,10 @@
 //SortingType type = SortingType.Tournament;
 //WindowManager.Initialize(type, 1000);
 
-SortingType type = SortingType.Tree;
+//SortingType type = SortingType.Tree;
+//WindowManager.Initialize(type, 100);
+
+SortingType type = SortingType.Block;
 WindowManager.Initialize(type, 100);
 
 //SortingType type = SortingType.Bogo;

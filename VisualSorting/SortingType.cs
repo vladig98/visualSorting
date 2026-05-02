@@ -21,7 +21,7 @@ public enum SortingType
     InPlaceMerge = 13,
     Tournament = 14,
     Tree = 15,
-    Block = 16,
+    Block = 16,            // aka Block Merge
     Smooth = 17,
     Tim = 18,
     Patience = 19,

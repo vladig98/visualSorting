@@ -1,4 +1,6 @@
-﻿namespace VisualSorting;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace VisualSorting;
 
 public static class Sorter
 {
@@ -469,7 +471,39 @@ public static class Sorter
 
     public static IEnumerable<int> BlockSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        if (n < 2)
+        {
+            yield break;
+        }
+
+        int blockSize = 16;
+
+        for (int i = 0; i < n; i += blockSize)
+        {
+            int end = Math.Min(i + blockSize - 1, n - 1);
+            foreach (int frame in InsertionSortRange(numbers, i, end))
+            {
+                yield return frame;
+            }
+        }
+
+        for (int size = blockSize; size < n; size *= 2)
+        {
+            for (int left = 0; left < n; left += 2 * size)
+            {
+                int mid = left + size - 1;
+                int right = Math.Min(left + 2 * size - 1, n - 1);
+
+                if (mid < right)
+                {
+                    foreach (int frame in InPlaceMerge(numbers, left, mid, right))
+                    {
+                        yield return frame;
+                    }
+                }
+            }
+        }
     }
 
     public static IEnumerable<int> SmoothSort(int[] numbers)
