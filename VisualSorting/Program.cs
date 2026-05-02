@@ -58,7 +58,10 @@
 //SortingType type = SortingType.Patience;
 //WindowManager.Initialize(type, 100);
 
-SortingType type = SortingType.Cube;
+//SortingType type = SortingType.Cube;
+//WindowManager.Initialize(type, 100);
+
+SortingType type = SortingType.Flux;
 WindowManager.Initialize(type, 100);
 
 //SortingType type = SortingType.Bogo;

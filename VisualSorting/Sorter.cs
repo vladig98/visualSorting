@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace VisualSorting;
+﻿namespace VisualSorting;
 
 public static class Sorter
 {
@@ -730,7 +728,17 @@ public static class Sorter
 
     public static IEnumerable<int> FluxSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        if (n < 2)
+        {
+            yield break;
+        }
+
+        int[] buffer = new int[n];
+        foreach (int frame in FluxSortRecursive(numbers, buffer, 0, n))
+        {
+            yield return frame;
+        }
     }
 
     public static IEnumerable<int> CrumSort(int[] numbers)
@@ -1255,5 +1263,76 @@ public static class Sorter
             n >>= 1;
         }
         return n + r;
+    }
+
+    private static IEnumerable<int> FluxSortRecursive(int[] array, int[] buffer, int start, int count)
+    {
+        if (count <= 32)
+        {
+            foreach (int frame in InsertionSort(array, start, start + count - 1))
+            {
+                yield return frame;
+            }
+
+            yield break;
+        }
+
+        int pivot = array[start + count / 2];
+        int leftCount = 0;
+        int rightCount = 0;
+
+        for (int i = 0; i < count; i++)
+        {
+            int val = array[start + i];
+            if (val < pivot)
+            {
+                buffer[leftCount++] = val;
+            }
+            else
+            {
+                buffer[count - 1 - rightCount++] = val;
+            }
+            yield return start + i;
+        }
+
+        for (int i = 0; i < leftCount; i++)
+        {
+            array[start + i] = buffer[i];
+            yield return i;
+        }
+
+        for (int i = 0; i < rightCount; i++)
+        {
+            array[start + leftCount + i] = buffer[count - 1 - i];
+            yield return i;
+        }
+
+        yield return start;
+
+        foreach (int frame in FluxSortRecursive(array, buffer, start, leftCount))
+        {
+            yield return frame;
+        }
+
+        foreach (int frame in FluxSortRecursive(array, buffer, start + leftCount, rightCount))
+        {
+            yield return frame;
+        }
+    }
+
+    private static IEnumerable<int> InsertionSort(int[] array, int left, int right)
+    {
+        for (int i = left + 1; i <= right; i++)
+        {
+            int key = array[i];
+            int j = i - 1;
+            while (j >= left && array[j] > key)
+            {
+                array[j + 1] = array[j];
+                j--;
+                yield return j;
+            }
+            array[j + 1] = key;
+        }
     }
 }
