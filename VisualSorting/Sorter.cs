@@ -422,7 +422,26 @@ public static class Sorter
 
     public static IEnumerable<int> TournamentSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        List<TournamentNode> forest = [];
+
+        foreach (int n in numbers)
+        {
+            forest.Add(new TournamentNode { Value = n });
+        }
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            TournamentNode? winner = PlayTournament(forest);
+            if (winner is null)
+            {
+                continue;
+            }
+
+            numbers[i] = winner.Value;
+
+            yield return i;
+            forest = winner.Defeated;
+        }
     }
 
     public static IEnumerable<int> TreeSort(int[] numbers)
@@ -794,5 +813,45 @@ public static class Sorter
                 start2++;
             }
         }
+    }
+
+    private static TournamentNode? PlayTournament(List<TournamentNode> nodes)
+    {
+        if (nodes.Count == 0)
+        {
+            return null;
+        }
+
+        List<TournamentNode> currentRound = nodes;
+        while (currentRound.Count > 1)
+        {
+            List<TournamentNode> nextRound = [];
+            for (int i = 0; i < currentRound.Count; i += 2)
+            {
+                if (i + 1 < currentRound.Count)
+                {
+                    TournamentNode node1 = currentRound[i];
+                    TournamentNode node2 = currentRound[i + 1];
+
+                    if (node1.Value <= node2.Value)
+                    {
+                        node1.Defeated.Add(node2);
+                        nextRound.Add(node1);
+                    }
+                    else
+                    {
+                        node2.Defeated.Add(node1);
+                        nextRound.Add(node2);
+                    }
+                }
+                else
+                {
+                    nextRound.Add(currentRound[i]);
+                }
+            }
+            currentRound = nextRound;
+        }
+
+        return currentRound[0];
     }
 }
