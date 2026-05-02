@@ -686,7 +686,46 @@ public static class Sorter
 
     public static IEnumerable<int> CubeSort(int[] numbers)
     {
-        throw new NotImplementedException();
+        int n = numbers.Length;
+        if (n < 2)
+        {
+            yield break;
+        }
+
+        for (int i = 1; i < n; i++)
+        {
+            int key = numbers[i];
+            int left = 0;
+            int right = i - 1;
+
+            while (left <= right)
+            {
+                int mid = left + (right - left) / 2;
+
+                yield return mid;
+
+                if (numbers[mid] > key)
+                {
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+
+            for (int j = i - 1; j >= left; j--)
+            {
+                numbers[j + 1] = numbers[j];
+                if (j % 5 == 0)
+                {
+                    yield return j;
+                }
+            }
+
+            numbers[left] = key;
+            yield return left;
+        }
     }
 
     public static IEnumerable<int> FluxSort(int[] numbers)
